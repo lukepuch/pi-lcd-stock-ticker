@@ -1,0 +1,23 @@
+[project]
+name = "pi-lcd-stock-ticker"
+version = "0.1.0"
+description = "Fullscreen Bitcoin price ticker for a Waveshare 480x320 LCD on Raspberry Pi"
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.uv]
+# tkinter isn't available in uv-managed Python builds (no bundled Tk) and
+# isn't pip-installable, so always use a system interpreter that has
+# python3-tk installed rather than letting uv download its own.
+python-preference = "only-system"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
+
+[tool.pytest.ini_options]
+# `uv run pytest` invokes pytest's entry point directly, which doesn't add
+# the repo root to sys.path the way `python -m pytest` does — needed so
+# `import ticker` resolves during test collection.
+pythonpath = ["."]
